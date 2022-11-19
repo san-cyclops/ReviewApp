@@ -26,6 +26,11 @@ public class AppController {
 	public String viewHomePage() {
 		return "index";
 	}
+	
+	@GetMapping("/main")
+	public String viewMainPage() {
+		return "main";
+	}
 
 	@GetMapping("/register")
 	public String showRegistrationForm(Model model) {
@@ -57,7 +62,7 @@ public class AppController {
 	public String showAddReviewForm(Model model) {
 		model.addAttribute("review", new Review());
 		model.addAttribute("movieList", getMovieList());
-
+		model.addAttribute("userList", getuserList());
 		return "addreview_form";
 	}
 
@@ -72,7 +77,6 @@ public class AppController {
 	public String listmovie(Model model) {
 		List<User> listUsers = userRepo.findAll();
 		model.addAttribute("listUsers", listUsers);
-
 		return "movies";
 	}
 
@@ -86,6 +90,29 @@ public class AppController {
 			movieList.put(movie.getId(), movie.getName());
 		}
 		return movieList;
+	}
+	@ModelAttribute("userList")
+	public Map<Long, String> getuserList() {
+		List<User> listUsers = userRepo.findAll();
+
+		Map<Long, String> userList = new HashMap<Long, String>();
+
+		for (User user : listUsers) {
+			userList.put(user.getId(), user.getName());
+		}
+		return userList;
+	}
+	
+	@ModelAttribute("reviewList")
+	public Map<Long, String> getreviewList() {
+		List<User> listUsers = userRepo.findAll();
+
+		Map<Long, String> userList = new HashMap<Long, String>();
+
+		for (User user : listUsers) {
+			userList.put(user.getId(), user.getName());
+		}
+		return userList;
 	}
 
 }
