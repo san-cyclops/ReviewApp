@@ -14,6 +14,8 @@ public class AppController {
 
 	@Autowired
 	private UserRepository userRepo;
+	@Autowired
+	private ReviewRepository reviewRepo;
 	
 	@GetMapping("")
 	public String viewHomePage() {
@@ -44,5 +46,19 @@ public class AppController {
 		model.addAttribute("listUsers", listUsers);
 		
 		return "users";
+	}
+	
+	@GetMapping("/addreview")
+	public String showAddReviewForm(Model model) {
+		model.addAttribute("review", new Review());
+		
+		return "addreview_form";
+	}
+	
+	@PostMapping("/savereview")
+	public String saveReview(Review review) {
+		reviewRepo.save(review);
+		
+		return "save_success";
 	}
 }

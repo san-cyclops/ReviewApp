@@ -24,8 +24,19 @@ public class Review {
 	@Column(nullable = false)
 	private Long movieid;
 	
+	@Column(nullable = false)
+	private Long score;
+	
 	public Long getId() {
 		return id;
+	}
+
+	public Long getScore() {
+		return score;
+	}
+
+	public void setScore(Long score) {
+		this.score = score;
 	}
 
 	public void setId(Long id) {
