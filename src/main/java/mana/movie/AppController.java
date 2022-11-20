@@ -30,7 +30,8 @@ public class AppController {
 	}
 	
 	@GetMapping("/main")
-	public String viewMainPage() {
+	public String viewMainPage(Model model) {
+		model.addAttribute("reviewList", getreviewList());
 		return "main";
 	}
 
@@ -117,8 +118,9 @@ public class AppController {
 		for (Review review : listReview) {
  
 			User user = userRepo.findByID(review.getUserid()); 
+			Movie movie = movieRepo.findByID(review.getMovieid()); 
 			
-			reviewList.put(review.getMovieid(), user.getName());
+			reviewList.put(review.getMovieid(), user.getName() + " | " + movie.getName());
 		}
 		return reviewList;
 	}

@@ -32,13 +32,13 @@ div {
 			<thead class="thead-dark">
 				<tr>
 					<th>Movie ID</th>
-					<th>User</th>
+					<th>User | Movie</th>
 				</tr>
 			</thead>
 			<tbody>
 				<tr th:each="key: ${reviewList.keySet()}">
 					<td th:text="${key}">Movie ID</td>
-					<td th:text="${reviewList.get(key)}">User</td>
+					<td th:text="${reviewList.get(key)}">User | Movie</td>
 				</tr>
 			</tbody>
 		</table>
