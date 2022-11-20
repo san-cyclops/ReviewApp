@@ -3,6 +3,7 @@ package mana.movie;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -23,7 +24,8 @@ public class AppController {
 	private MovieRepository movieRepo;
 
 	@GetMapping("")
-	public String viewHomePage() {
+	public String viewHomePage(Model model) {
+		model.addAttribute("reviewList", getreviewList());
 		return "index";
 	}
 	
@@ -105,14 +107,20 @@ public class AppController {
 	
 	@ModelAttribute("reviewList")
 	public Map<Long, String> getreviewList() {
-		List<User> listUsers = userRepo.findAll();
+		
+		Map<Long,String> reviewList = new HashMap<Long, String>();
+		
+		
+		List<Review> listReview = reviewRepo.findAll();
 
-		Map<Long, String> userList = new HashMap<Long, String>();
 
-		for (User user : listUsers) {
-			userList.put(user.getId(), user.getName());
+		for (Review review : listReview) {
+ 
+			User user = userRepo.findByID(review.getUserid()); 
+			
+			reviewList.put(review.getMovieid(), user.getName());
 		}
-		return userList;
+		return reviewList;
 	}
 
 }
