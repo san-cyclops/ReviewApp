@@ -8,19 +8,51 @@
 	<script type="text/javascript" src="/webjars/jquery/jquery.min.js"></script>
 	<script type="text/javascript" src="/webjars/bootstrap/js/bootstrap.min.js"></script>
 </head>
+<style>
+ 
 
+	ul {
+		list-style-type: none;
+		margin: 0;
+		padding: 0;
+		overflow: hidden;
+		background-color: rgb(245, 231, 231);
+		
+	}
+
+	li {
+		float: inline-start;
+	}
+
+	li a {
+		display: block;
+		color: white;
+		text-align: center;
+		padding: 14px 16px;
+		text-decoration: none;
+	}
+
+	li a:hover {
+		background-color: #111;
+	}
+</style>
 <body>
 	<div class="container text-center">
 		<div>
+		<ul>
+			<li>
 		<form th:action="@{/logout}" method="post">
 			<p>
 				Welcome <b>[[${#request.userPrincipal.principal.fullName}]]</b>
 			</p>
 			<input type="submit" value="Sign Out" />
-		</form>
+		</form></li>
+		<li>
+		
 		<form th:action="@{/main}" method="get">
 			<input type="submit" value="Main Page" />
-		</form>
+		</form></li>
+		</ul>
 	</div>
 		<div>
 			<h1>Add Review</h1>
@@ -52,12 +84,11 @@
 				<div class="form-group row">
 					<label class="col-4 col-form-label">score: </label>
 					<div class="col-8">
-						<input type="number" th:field="*{score}" class="form-control" required minlength="6"
-							maxlength="10" />
+						<input type="range" th:field="*{score}" class="form-control" value="0" min="0" max="5" oninput="this.nextElementSibling.value = this.value">
+							<output>3</output>	
+														
 					</div>
 				</div>
-
-
 
 
 				<div class="form-group row">
@@ -69,7 +100,7 @@
 				</div>
 
 				<div>
-					<button type="submit" class="btn btn-primary">Sign Up</button>
+					<button type="submit" class="btn btn-primary">Add Review</button>
 				</div>
 			</div>
 		</form>

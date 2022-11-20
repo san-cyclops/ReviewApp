@@ -7,6 +7,39 @@
 	<script type="text/javascript" src="/webjars/jquery/jquery.min.js"></script>
 	<script type="text/javascript" src="/webjars/bootstrap/js/bootstrap.min.js"></script>
 </head>
+<style>
+	h1 {
+		border-style: dotted;
+	}
+
+	div {
+		border-style: dotted;
+	}
+
+	ul {
+		list-style-type: none;
+		margin: 0;
+		padding: 0;
+		overflow: hidden;
+		background-color: #333;
+	}
+
+	li {
+		float: left;
+	}
+
+	li a {
+		display: block;
+		color: white;
+		text-align: center;
+		padding: 14px 16px;
+		text-decoration: none;
+	}
+
+	li a:hover {
+		background-color: #111;
+	}
+</style>
 <body>
 	<div class="container text-center">
 		<h1>Welcome - MANA Movie Studios</h1>
@@ -20,9 +53,11 @@
 		</form>
 	</div>
 	
-		<h3><a th:href="@{/users}">List of Users</a></h3>
-		<h3><a th:href="@{/register}">Register</a></h3>
-		<h3><a th:href="@{/addreview}">addreview</a></h3>
+		<ul>
+			<li><a th:href="@{/users}">List of Users</a></li>
+			<li><a th:href="@{/register}">Register</a></li>
+			<li><a th:href="@{/addreview}">Add Review</a></li>
+		</ul>
 	</div>
 	
 	<div class="container text-center">
@@ -31,14 +66,18 @@
 		<table class="table table-striped table-bordered">
 			<thead class="thead-dark">
 				<tr>
-					<th>Movie ID</th>
-					<th>User | Movie</th>
+					<th>movie</th>
+					<th>category</th>
+					<th>score</th>
+					<th>summary</th>
 				</tr>
 			</thead>
 			<tbody>
-				<tr th:each="key: ${reviewList.keySet()}">
-					<td th:text="${key}">Movie ID</td>
-					<td th:text="${reviewList.get(key)}">User | Movie</td>
+				<tr th:each="key: ${reviewList}">
+					<td th:text="${key.movie}">Movie ID</td>
+					<td th:text="${key.category}">Movie</td>
+					<td th:text="${key.score}">score</td>
+					<td th:text="${key.summary}">summary</td>
 				</tr>
 			</tbody>
 		</table>

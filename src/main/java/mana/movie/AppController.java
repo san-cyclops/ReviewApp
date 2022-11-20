@@ -1,10 +1,9 @@
 package mana.movie;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -50,7 +49,7 @@ public class AppController {
 
 		userRepo.save(user);
 
-		return "register_success";
+		return "main";
 	}
 
 	@GetMapping("/users")
@@ -73,7 +72,7 @@ public class AppController {
 	public String saveReview(Review review) {
 		reviewRepo.save(review);
 
-		return "save_success";
+		return "main";
 	}
 
 	@GetMapping("/movies")
@@ -107,22 +106,53 @@ public class AppController {
 	}
 	
 	@ModelAttribute("reviewList")
-	public Map<Long, String> getreviewList() {
+	public List<ReviewRating> getreviewList() {
 		
-		Map<Long,String> reviewList = new HashMap<Long, String>();
+		//Map<Long,String> reviewList = new HashMap<Long, String>();
 		
+		
+		List<ReviewRating> reviewList = new ArrayList<ReviewRating>();
 		
 		List<Review> listReview = reviewRepo.findAll();
 
 
 		for (Review review : listReview) {
- 
+			ReviewRating reviewRating = new ReviewRating();
 			User user = userRepo.findByID(review.getUserid()); 
 			Movie movie = movieRepo.findByID(review.getMovieid()); 
 			
-			reviewList.put(review.getMovieid(), user.getName() + " | " + movie.getName());
+			reviewRating.setMovie(movie.getName());
+			reviewRating.setSummary(review.getSummary());
+			long l= movie.getCategory();
+			int i=(int)l;  
+			reviewRating.setCategory(MyEnum.fromInteger(i).toString());
+			reviewRating.setScore(review.getScore());
+  
+			reviewList.add(reviewRating);
+			//reviewList.put(review.getMovieid(), user.getName() + " | " + movie.getName());
 		}
 		return reviewList;
+	}
+	
+	public enum MyEnum {
+		Comedy,
+		Action,
+		Suspense,
+		Others;
+
+	    public static MyEnum fromInteger(int x) {
+	        switch(x) {
+	        case 0:
+	            return Comedy;
+	        case 1:
+	            return Action;
+	        case 2:
+	            return Suspense;
+	        case 3:
+	            return Others;
+	        }
+	        return null;
+	    }
 	}
 
 }
