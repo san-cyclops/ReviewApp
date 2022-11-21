@@ -80,9 +80,11 @@ public class AppController {
 		model.addAttribute("movie", new Movie());
 		
 		Map<Integer,String> category = new HashMap<Integer, String>();
+		  
 		Integer i =0;
 		for (MyEnum type : MyEnum.values()) { 
 			category.put(i,type.toString());
+			i++;
 		}
 		model.addAttribute("category", category);
 		return "addmovie_form";
