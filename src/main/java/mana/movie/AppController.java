@@ -74,6 +74,27 @@ public class AppController {
 
 		return "main";
 	}
+	
+	@GetMapping("/addmovie")
+	public String showAddMovieForm(Model model) {
+		model.addAttribute("movie", new Movie());
+		
+		Map<Integer,String> category = new HashMap<Integer, String>();
+		Integer i =0;
+		for (MyEnum type : MyEnum.values()) { 
+			category.put(i,type.toString());
+		}
+		model.addAttribute("category", category);
+		return "addmovie_form";
+	}
+
+	@PostMapping("/savemovie")
+	public String saveMovie(Movie movie) {
+		movieRepo.save(movie);
+
+		return "main";
+	}
+	
 
 	@GetMapping("/movies")
 	public String listmovie(Model model) {
